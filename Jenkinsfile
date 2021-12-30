@@ -24,7 +24,7 @@ pipeline {
         steps {
           sh 'printenv'
           sh 'docker build -t aakashrathee/numeric-app:""$GIT_COMMIT"" .'
-          sh 'docker push aakashrathee/numeric-app:""$GIT_COMMIT"" .'   //git added a new stage
+          sh 'docker push aakashrathee/numeric-app:""$GIT_COMMIT""'   //git added a new stage
       }
     }
     }
