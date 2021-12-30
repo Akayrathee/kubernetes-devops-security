@@ -23,7 +23,7 @@ pipeline {
       stage('Docker Build and Push'){
         steps {
           sh 'printenv'
-          sh 'docker build -t aakashrathee/numeric-app:""$GIT-COMMIT"" .'
+          sh 'docker build -t siddharth67/numeric-app:""$GIT-COMMIT"" .'
           sh 'docker push aakashrathee/numeric-app:""$GIT-COMMIT"" .'   //git added a new stage
       }
     }
