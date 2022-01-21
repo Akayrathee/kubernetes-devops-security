@@ -30,13 +30,26 @@ pipeline {
           }
         }
       }
-      stage('SonarQube - SAST') {
+    //   stage('SonarQube - SAST') {
+    //   steps {
+    //     withSonarQubeEnv('sonarcube'){
+    //     sh "mvn sonar:sonar -Dsonar.projectKey=numeric-application -Dsonar.host.url=http://devsecops-aakash.eastus.cloudapp.azure.com:9000 -Dsonar.login=ef24409f636e6a68a31fdc65f8d1ea103b0d75bf"
+    //     }
+    //     timeout(time: 2, unit: 'MINUTES'){
+    //       script{
+    //         waitForQualityGate abortPipeline: true
+    //       }
+    //     }
+    //   }
+    // }
+
+    stage('SonarQube - SAST') {
       steps {
-        withSonarQubeEnv('sonarcube'){
-        sh "mvn sonar:sonar -Dsonar.projectKey=numeric-application -Dsonar.host.url=http://devsecops-aakash.eastus.cloudapp.azure.com:9000 -Dsonar.login=ef24409f636e6a68a31fdc65f8d1ea103b0d75bf"
+        withSonarQubeEnv('sonarqube') {
+          sh "mvn sonar:sonar -Dsonar.projectKey=numeric-application -Dsonar.host.url=http://devsecops-aakash.eastus.cloudapp.azure.com:9000 -Dsonar.login=ef24409f636e6a68a31fdc65f8d1ea103b0d75bf"
         }
-        timeout(time: 2, unit: 'MINUTES'){
-          script{
+        timeout(time: 2, unit: 'MINUTES') {
+          script {
             waitForQualityGate abortPipeline: true
           }
         }
