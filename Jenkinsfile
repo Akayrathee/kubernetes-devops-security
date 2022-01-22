@@ -55,15 +55,17 @@ pipeline {
         }
       }
     }
-    // Added Vulnerable version checking
-    stage('Vulnerability Scan - Docker ') {
+    // Added Vulnerable version checking Dependency scan + trivy Scan
+    stage('Vulnerability Scan - Docker') {
       steps {
-        sh "mvn dependency-check:check"
-      }
-      post {
-        always {
-          dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-        }
+        parallel(
+          "Dependency Scan": {
+            sh "mvn dependency-check:check"
+          },
+          "Trivy Scan": {
+            sh "bash trivy-docker-image-scan.sh"
+          }
+        )
       }
     }
       stage('Docker Build and Push'){
